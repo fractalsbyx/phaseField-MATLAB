@@ -1,15 +1,23 @@
 dx = 0.025;
 dy = 0.025;
+dz = 0.025;
 
-x0 = 0;
-y0 = 0;
-xf = 5.00 - dx; 
-yf = 5.00 - dy;
+lx = 2.0;
+ly = 2.0;
+lz = 2.0;
 
-np = 40;
+x0 = 0.0;
+y0 = 0.0;
+z0 = 0.0;
+xf = lx - dx; 
+yf = ly - dy;
+zf = lz - dz;
+
+np = 10;
 
 Nx = round((xf - x0) / dx + 1);
 Ny = round((yf - y0) / dy + 1);
+Nz = round((zf - z0) / dz + 1);
 
 l_gb_ratio = 0.1;
 

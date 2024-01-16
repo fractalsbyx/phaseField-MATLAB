@@ -1,0 +1,13 @@
+Simulating, t = 0.000000
+Elapsed Time: 23.650321
+Total Elapsed Time: 24.309055
+
+Simulating, t = 1.000000
+Elapsed Time: 19.066486
+Total Elapsed Time: 44.748427
+
+Simulating, t = 2.000000
+Elapsed Time: 17.576420
+Total Elapsed Time: 62.994573
+
+Simulating, t = 3.000000
