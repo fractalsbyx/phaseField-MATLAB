@@ -1,0 +1,3 @@
+function D = div(x1, y1, x2, y2, lx, ly)
+  D = gradArr_2D 
+end

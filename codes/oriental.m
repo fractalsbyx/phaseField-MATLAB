@@ -12,70 +12,16 @@ nprint = 10;
 t0 = 0.d0;
 thold = 1000.d0;
 savefigs = false;
+savedata = false;
 
 %% Generating grid points
 [X, Y] = meshgrid(y0:dy:yf, x0:dx:xf);
 
-%% Initializing order parameter n
-n = zeros([Nx,Ny],'quaternion');
-range = 9; % 3
-rand_pos = zeros(np, 2);
-
-%%
-curr_grain_id = 1;
-exclude_distance = 25; %% 40 grid points
-while curr_grain_id <= np
-  rand_num = rand();
-  temp = floor(Nx * Ny * rand_num);
-  rand_pos(curr_grain_id, 1) = floor(double(temp) / Ny) + 1;
-  rand_pos(curr_grain_id, 2) = mod(temp, Nx) + 1;
-  
-  is_valid_grain = true;
-  for past_grain_id = 1 : (curr_grain_id - 1)
-    min_x = min(rand_pos(curr_grain_id, 1), rand_pos(past_grain_id, 1));
-    max_x = max(rand_pos(curr_grain_id, 1), rand_pos(past_grain_id, 1));
-    min_y = min(rand_pos(curr_grain_id, 2), rand_pos(past_grain_id, 2));
-    max_y = max(rand_pos(curr_grain_id, 2), rand_pos(past_grain_id, 2));
-    
-    dist1 = calc_distance(min_x, max_x, min_y, max_y);
-    dist2 = calc_distance(min_x, max_x - Nx, min_y, max_y);
-    dist3 = calc_distance(min_x, max_x, min_y, max_y - Ny);
-    dist4 = calc_distance(min_x, max_x - Nx, min_y, max_y - Ny);
-    
-    distance = min([dist1, dist2, dist3, dist4]);
-    
-    if distance < exclude_distance
-      fprintf("curr pos = [%i, %i], past pos = [%i, %i], distance = %f\n", rand_pos(curr_grain_id, 1), rand_pos(curr_grain_id, 2), rand_pos(past_grain_id, 1), rand_pos(past_grain_id, 2), distance);
-      is_valid_grain = false;
-      break;
-    end
-  end
-  
-  if is_valid_grain == true
-    D2=2;
-    while D2>1
-        a=2*rand()-1;
-        b=2*rand()-1;
-        c=2*rand()-1;
-        d=2*rand()-1;
-        D2= a*a+b*b+c*c+d*d;
-    end
-    for x_id = (rand_pos(curr_grain_id, 1) - range) : (rand_pos(curr_grain_id, 1) + range)
-      for y_id = (rand_pos(curr_grain_id, 2) - range) : (rand_pos(curr_grain_id, 2) + range)
-        if calc_distance(x_id, rand_pos(curr_grain_id, 1), y_id, rand_pos(curr_grain_id, 2)) <= range
-          curr_x = 1+(mod(x_id, Nx));
-          curr_y = 1+(mod(y_id, Ny));
-          n(curr_x, curr_y) = normalize(quaternion(a,b,c,d));
-        end
-      end
-    end    
-    curr_grain_id = curr_grain_id + 1;
-  end  
-end
 %% Load
-load('n_ini.mat')
-load('n_ini_2.mat')
-load("n_pointy.mat")
+% load('n_ini.mat')
+% load('n_ini_2.mat')
+% load("n_pointy.mat")
+load("../data/initial_n.mat")
 %% init plots
 figure(1)
 til = tiledlayout(1,3);
@@ -201,10 +147,3 @@ end
 
 %% Write n to files
 save('../data/n_evolved.mat',"n");
-fileID = fopen('../data/initial_n.dat','w');
-fwrite(fileID, n, 'quaternion');
-fclose(fileID);
-%% defining functions
-function [dist] = calc_distance(x1, x2, y1, y2)
-  dist = sqrt( (x1 - x2)^2 + (y1 - y2)^2 );
-end

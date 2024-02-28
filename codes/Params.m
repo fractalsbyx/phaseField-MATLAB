@@ -6,7 +6,7 @@ y0 = 0;
 xf = 5.00 - dx; 
 yf = 5.00 - dy;
 
-np = 10;
+np = 40;
 
 Nx = round((xf - x0) / dx + 1);
 Ny = round((yf - y0) / dy + 1);
