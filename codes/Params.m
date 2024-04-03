@@ -1,15 +1,12 @@
-dx = 0.025;
-dy = 0.025;
-
+dx = 0.01;
 x0 = 0;
-y0 = 0;
-xf = 5.00 - dx; 
-yf = 5.00 - dy;
+lx = 2.00;
 
-np = 40;
+xf = lx - dx;
+
+np = 2;
 
 Nx = round((xf - x0) / dx + 1);
-Ny = round((yf - y0) / dy + 1);
 
 l_gb_ratio = 0.1;
 
