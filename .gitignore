@@ -1,2 +1,7 @@
 *.png
+*.mp4
+*.avi
+# Data
+*.mat
+*.5
 *.dat
